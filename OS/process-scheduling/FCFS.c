@@ -1,50 +1,39 @@
-// turn aroundtime = completion - arrival
-// waiting time = turnaround - burst
-
 #include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
 
 int main(){
-    int n, i, j;
-    float avgWaitTime = 0, avgTurnaroundTime = 0;
-    printf("Enter the number of processes: ");
-    scanf("%d", &n);
-    int burstTime[n], arrivalTime[n], waitTime[n], turnaroundTime[n];
-    printf("Enter the burst time and arrival time of each process:\n");
-    for(i = 0; i < n; i++) {
-        printf("Process %d:\n", i+1);
-        printf("Burst time: ");
-        scanf("%d", &burstTime[i]);
-        printf("Arrival time: ");
-        scanf("%d", &arrivalTime[i]);
-    }
+    int i,n;
+    printf("enter number of processes : ");
+    scanf("%d",&n);
+    int AT[n],BT[n],WT[n],TT[n],total=0,burst=0;
+    float avgWT,avgTT,compl_time=0;
 
-    //FCFS Algorithm 
-
+    printf("enter the arrival times and burst times for all processes : \n");
     for(i=0;i<n;i++){
-        if (i==0)
-            waitTime[i]=0;
-        else{
-            waitTime[i]=0;
-            for(j=0;j<i;j++){
-                waitTime[i]+=burstTime[j];
-            }
-            waitTime[i]-=arrivalTime[i];
-        }
-        turnaroundTime[i] = burstTime[i] + waitTime[i];
-        avgWaitTime+=waitTime[i];
-        avgTurnaroundTime+=turnaroundTime[i];
-        
+        scanf("%d %d",&AT[i],&BT[i]);
     }
-    printf("\nProcess\tBT\t\tAT\tWT\t\tTT\n");
-    for(i = 0; i < n; i++) {
-        printf("P%d\t\t%d\t\t%d\t\t%d\t\t%d\n", i+1, burstTime[i], arrivalTime[i], waitTime[i], turnaroundTime[i]);
-    }
-    avgWaitTime /= n;
-    avgTurnaroundTime /= n;
-    printf("\nAverage waiting time: %.2f\n", avgWaitTime);
-    printf("Average turnaround time: %.2f\n", avgTurnaroundTime);
 
+    //calculation of waiting time
+    for(i=0;i<n;i++){
+        if(i==0){
+            WT[i] = AT[i];
+        }else{
+            WT[i] = burst-AT[i];
+        }
+        burst+=BT[i];
+        total+=WT[i];
+    }
+    avgWT=(float)total/n;
+
+    //calculation of turnaround time
+    total=0;
+    compl_time=0;
+    for(i=0;i<n;i++){
+       compl_time+=BT[i];
+       TT[i] = compl_time - AT[i];
+       total+=TT[i]; 
+    }
+    avgTT=(float)total/n;
+    
+    printf("average waiting time is %.2f and average turnaround time is %.2f",avgWT,avgTT);
     return 0;
 }

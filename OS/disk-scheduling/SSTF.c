@@ -3,38 +3,35 @@
 #include<math.h>
 
 int main(){
-    int n,head,i,k,seek_time=0,min,min_index,visited[n];
-    printf("Enter the number of requests: ");
-    scanf("%d",&n);
-    printf("Enter the current head position: ");
-    scanf("%d",&head);
-    int requests[n];
-    printf("Enter the requests: ");
+  int i,n,head,seek_time = 0;
+  printf("enter number of requests : ");
+  scanf("%d",&n);
+  int request[n];
+  printf("enter the requests : ");
+  for(i=0;i<n;i++){
+    scanf("%d",&request[i]);
+  }
+  printf("enter the initial head : ");
+  scanf("%d",&head);
+
+  int count = 0;
+
+  while(count!=n){
+
+    int min = 1000,index,d;
     for(i=0;i<n;i++){
-        scanf("%d",&requests[i]);
-        visited[i] =0;
-    }
-
-
-    for (k=0;k<n;k++){
-        min=99999;
-        for(i=0;i<n;i++){
-         if(!visited[i] && abs(head-requests[i]) < min){
-           min = abs(head-requests[i]);
-           min_index = i;
-         }
+      d = abs(request[i] - head);
+      if (min > d){
+        min = d;
+        index = i;
       }
-
-      seek_time+=min;
-      head=requests[min_index];
-      visited[min_index] =1;
     }
-    
-    printf("Total seek time is: %d",&seek_time);
-    return 0;
-    
+    seek_time+=min;
+    head = request[index];
+    request[index] = 1000;
+    count ++;
 
+  }
 
-
-
+  return 0;
 }
