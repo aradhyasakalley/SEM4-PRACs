@@ -1,7 +1,8 @@
+//O(N^2)
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-
 
 void insertionSort(int arr[],int n){
     int i,j,key;

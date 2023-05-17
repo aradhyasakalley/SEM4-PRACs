@@ -27,7 +27,6 @@ void prims(int graph[V][V]) {
     for (int i = 0; i < V; i++) {
         key[i] = INT_MAX;
         mstSet[i] = false;
-        parent[i] = -1;
     }
 
     key[0] = 0;
