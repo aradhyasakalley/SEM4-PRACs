@@ -31,6 +31,8 @@ void prims(int graph[V][V]) {
     }
 
     key[0] = 0;
+    parent[0] = -1;
+
     for (int i = 0; i < V - 1; i++) {
         int u = minKey(key, mstSet);
         mstSet[u] = true;
@@ -58,3 +60,6 @@ int main() {
     prims(graph);
     return 0;
 }
+
+
+
