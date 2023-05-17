@@ -44,9 +44,6 @@ void bellmanFord(int start){
     for(int i =0;i<V;i++){
         printf("%d: %d\n",i,distance[i]);
     } 
-
-
-
 }
 
 
