@@ -54,6 +54,7 @@ void mergeSort(int arr[], int l, int r){
     merge(arr,l,m,r);
 }
 
+
 int main(){
     int n,i,arr[10000];
     clock_t start,end;

@@ -3,22 +3,37 @@
 #include<time.h>
 
 
+// void selectionSort(int arr[],int n){
+//     int i,j,min_index;
+//     for(i=0;i<n-1;i++){
+//         min_index = i;
+//         for(j=i+1;j<n;j++)
+//             if(arr[j] < arr[min_index])
+//                min_index = j;
+        
+//         int temp;
+//         temp = arr[min_index];
+//         arr[min_index] = arr[i];
+//         arr[i] = temp;
+        
+//     }
+// }
+
+
 void selectionSort(int arr[],int n){
     int i,j,min_index;
     for(i=0;i<n-1;i++){
         min_index = i;
-        for(j=i+1;j<n;j++)
-            if(arr[j] < arr[min_index])
-               min_index = j;
-        
-        int temp;
-        temp = arr[min_index];
+        for(j=i+1;j<n;j++){
+            if(arr[i] < arr[min_index]){
+                min_index = i;
+            }
+        }
+        int temp = arr[min_index];
         arr[min_index] = arr[i];
         arr[i] = temp;
-        
     }
 }
-
 
 int main(){
     int n,i,arr[10000];
