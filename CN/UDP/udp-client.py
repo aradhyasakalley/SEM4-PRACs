@@ -2,13 +2,13 @@ import socket
 
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 
-udp_host = socket.gethostname()
-udp_port = 12345
-
+HOST = "127.0.0.1"
+PORT = 1234
 
 msg = "hello"
+sock.sendto(msg.encode(),(HOST,PORT))
 
-print("UDP Target host : ",udp_host)
-print("UDP Target port : ",udp_port)
+response,addr = sock.recvfrom(1024)
 
-sock.sendto(msg.encode('utf-8'),(udp_host,udp_port))
+print(f'response from server : {response.decode()}')
+print('Client closed')
