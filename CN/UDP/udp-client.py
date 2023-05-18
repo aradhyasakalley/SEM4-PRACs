@@ -3,7 +3,7 @@ import socket
 sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 
 udp_host = socket.gethostname()
-udp_port = 1234
+udp_port = 12345
 
 
 msg = "hello"
