@@ -1,71 +1,121 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define N strlen(gen_poly)
+char data[20], genPoly[20], crcStr[20], finalCrcStr[20];
+int i, j, dataLen;
 
-char data[20], gen_poly[20], check_value[20];
-int i, j, data_length;
+int n;
 
-void xor() {
-    for (j = 1; j < N; j++) {
-        check_value[j] = (check_value[j] == gen_poly[j]) ? '0' : '1';
+void XOR()
+{
+    for (j = 0; j < n; j++)
+    {
+        crcStr[j] = (crcStr[j] == genPoly[j]) ? '0' : '1';
     }
 }
 
-void receiver() {
+void CRC()
+{
+    for (i = 0; i < n; i++) // take first n bits
+    {
+        crcStr[i] = data[i];
+    }
+
+    do
+    {
+        if (crcStr[0] == '1') // generator polynomial always starts with 1
+        {
+            XOR();
+        }
+
+        for (j = 0; j < n - 1; j++) // replace n - 1 bits of crcStr with +1 position
+        {
+            crcStr[j] = crcStr[j + 1];
+        }
+
+        crcStr[j] = data[i++]; // nth bit is a new bit, then i++
+        // i tracks the current bit from data string
+    } while (i < dataLen + (n - 1));
+}
+
+void receiver()
+{
+    int flag = 0;
+
     printf("Enter the received data: ");
     scanf("%s", data);
-    crc();
-    for (i = 0; i < N - 1 && check_value[i] != '1'; i++) {
-        // Check if any error is detected
+
+    CRC();
+    if (crcStr[0] == '0')
+    {
+        for (j = 0; j < n - 1; j++)
+        {
+            crcStr[j] = crcStr[j + 1];
+        }
+        crcStr[j] = '\0';
     }
-    if (i == N - 1) {
-        printf("No error detected.\n");
-    } else {
+    else
+    {
+        flag = 1;
+    }
+
+    for (i = 0; i < n - 1; i++)
+    {
+        // Check if any error is detected
+        if (crcStr[i] == '1')
+        {
+            flag = 1;
+            break;
+        }
+    }
+
+    if (flag)
+    {
         printf("Error in transmission.\n");
     }
-}
-
-void crc() {
-    for (i = 0; i < N; i++) {
-        check_value[i] = data[i];
+    else
+    {
+        printf("No error detected.\n");
     }
-    do {
-        if (check_value[0] == '1') {
-            xor();
-        }
-        for (j = 0; j < N - 1; j++) {
-            check_value[j] = check_value[j + 1];
-        }
-        check_value[j] = data[i++];
-    } while (i < data_length + N - 1);
 }
 
-int main() {
-    printf("Enter the data to be sent: ");
+void main()
+{
+    printf("Enter the data stream to be sent: ");
     scanf("%s", data);
-    printf("Enter the generating polynomial: ");
-    scanf("%s", gen_poly);
+    printf("Enter the generator polynomial: ");
+    scanf("%s", genPoly);
 
-    data_length = strlen(data);
+    dataLen = strlen(data);
+    n = strlen(genPoly);
 
-    for (i = data_length; i < data_length + N - 1; i++) {
+    printf("Length of generator polynomial is %d\n", n);
+    for (i = dataLen; i < dataLen + (n - 1); i++)
+    {
         data[i] = '0';
     }
     data[i] = '\0';
+    printf("So, the data is appended with %d zeros: %s\n", n - 1, data);
 
-    printf("The data padded with (N-1) zeros is: %s\n", data);
+    CRC();
+    if (crcStr[0] == '0')
+    {
+        for (j = 0; j < n - 1; j++)
+        {
+            crcStr[j] = crcStr[j + 1];
+        }
+        crcStr[j] = '\0';
+    }
+    printf("The CRC or the check value for data is: %s\n", crcStr);
 
-    crc();
-    printf("The CRC or the check value is: %s\n", check_value);
-
-    for (i = data_length; i < data_length + N - 1; i++) {
-        data[i] = check_value[i - data_length];
+    // replacing the n - 1 zeroes with CRC to get final data
+    for (i = dataLen; i < dataLen + (n - 1); i++)
+    {
+        data[i] = crcStr[i - dataLen];
     }
     data[i] = '\0';
-
     printf("The final data to be sent is: %s\n", data);
-    receiver();
 
-    return 0;
+    receiver();
 }

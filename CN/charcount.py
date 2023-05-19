@@ -1,34 +1,31 @@
-#sender side code 
+#sender side code
+num_of_units = int(input('enter the nmumber of data units : '))
+#empty list 
 
-num = int(input('enter the number of frames in the data'))
 data_units = []
 
-for i in range(num):
-    data_unit = input('enter the data unit {}:'.format(i+1))
+for i in range(num_of_units) : 
+    data_unit = input('enter the data unit {} : '.format(i+1))
     data_units.append(data_unit)
+    
+resultData = ''
 
-result = ''
 for data_unit in data_units : 
-    length = len(data_unit) + 1
-    result+= str(length) + data_unit
+    lenght = len(data_unit) + 1
+    resultData += str(lenght) + data_unit
 
-print('data to be sent is : ',result)
+print('the final data to be sent is : ',resultData)
 
+#reciever side code 
 
+receivedData = input('enter the received data : ')
+decodedData = []
 
-#reciever side 
-
-frame = input('enter the data frame : ')
-decoded = []
-
-while frame : 
-    length = int(frame[0]) - 1
-    decoded = frame[1:length+1]
-    frame = frame[length+1:]
-
-print('the decoded frame is : ')
-for data_unit in decoded :
-    print(data_unit) 
-
-
-
+while receivedData : 
+    lenght = int(receivedData[0]) -1
+    decodedData.append(receivedData[1:lenght +1])
+    receivedData = receivedData[lenght+1:]
+    
+print("the original data was : ")
+for data_unit in decodedData : 
+    print(data_unit)
