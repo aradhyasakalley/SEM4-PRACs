@@ -1,40 +1,50 @@
-data = input('Enter the data to be stuffed: ')
-frame = list(data)
-stuffed_data = []
+dataString = input('enter the data string: ')
+frame = list(dataString)
 
+i = 0
 count = 0
+flag = 0
 
-for bit in frame:
-    if bit == '1':
-        count += 1
-        if count == 5:
-            stuffed_data.append('0')
+while i < len(frame) : 
+    if frame[i] == '1' : 
+        count +=1
+        if count == 5 and flag == 1 : 
+            frame.insert(i+1,'0')
             count = 0
-    else:
+    else : 
         count = 0
+        flag = 1
 
-    stuffed_data.append(bit)
-
-output = '01111110' + ''.join(stuffed_data) + '01111110'
-print("The stuffed data is:", output)
+    i += 1
 
 
-data = input("Enter the data : ").replace('01111110','')
-arr = list(data)
+output = '01111110' + ''.join(frame) + '01111110'
+print('data to be sent is : ',output)
+
+
+
+receivedFrame = input('enter the received frame: ').replace('01111110','')
+arr = list(receivedFrame)
+
 orig = []
-count = 0;
+i=0
+count = 5
 
-for bit in arr :
-    if count == 5 and bit == '1' :
+while i < len(arr) : 
+    if (count == 5) and arr[i] == '0' : 
         count = 0
+        i+=1
         continue
-
-
-    orig.append(bit)
-    if bit == '1':
-        count = count +1
-    else :
+    
+    if arr[i] == '1': 
+        orig.append(arr[i])
+        count+=1
+    else : 
         count = 0
+        orig.append(arr[i])
     
 
-print("the original data is : ",''.join(orig))
+    i+=1
+
+print("the original data stirng is : ",''.join(orig))
+
