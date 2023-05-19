@@ -1,25 +1,28 @@
+#sender
 inputData = input('enter the input data: ')
+#important 
 inputData = inputData.replace('#','##').replace('$','#$')
 
 finalData = '$' + inputData + '$'
-print('the data to be sent is :',finalData)
+print('the data to be sent is: ',finalData)
 
 
-receivedFrame = input('enter the receieved data: ')
+#reciever
+receivedData = input('enter the received data:')
+
+i = 1
 originalData = ''
 
-i=1
 
-while i < len(receivedFrame) -1 : 
-    if receivedFrame[i] != '#' :
-        originalData += receivedFrame[i]
-        
+while i < len(receivedData) -1 :
+    if receivedData[i] != '#':
+        originalData+=receivedData[i]
     else : 
-        if receivedFrame[i+1]!='#' and receivedFrame[i+1]!='$':
-            originalData += receivedFrame[i]
-        elif receivedFrame[i+1] =='$' and receivedFrame[i-1] =='#':
-            originalData += receivedFrame[i]
-            
+        if receivedData[i+1] != '#' and receivedData[i+1] != '$':
+            originalData+=receivedData[i]
+        elif receivedData[i+1] == '$' and receivedData[i-1] == '#':
+            originalData+=receivedData[i]
+
     i+=1
-    
-print('received data is ',originalData)
+
+print('the original data is: ',originalData)
