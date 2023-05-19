@@ -15,7 +15,7 @@ int minDistance(int dist[V],bool sptSet[V]){
 }
 
 void printSolution(int dist[V]){
-    printf("Vertex\t\t\tDistace from the source\n");
+    printf("Vertex\t\tDistace from the source\n");
     for(int i =0;i<V;i++){
         printf("%d\t\t\t\t%d\n",i,dist[i]);
     }
